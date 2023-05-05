@@ -1,6 +1,5 @@
-import pkg from 'express';
-const { app } = pkg;
-import express from "express"
+import express from "express";
+const app = express();
 import { PizzaService } from "./services/pizza-services.js";
 
 app.get('/Pizza', async (req, res) => {
