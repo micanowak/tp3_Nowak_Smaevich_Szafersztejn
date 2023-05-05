@@ -8,8 +8,8 @@ export class PizzaService {
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-                .query('SELECT * FORM Pizzas');
-            returnEntity = result.recordsets[0][0];
+                .query('SELECT * FROM pizza');
+            returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
@@ -23,7 +23,7 @@ export class PizzaService {
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('pId', sql.Int, id)
-                .query('SELECT * FORM Pizzas WHERE id = @pId');
+                .query('SELECT * FROM pizza WHERE id = @pId');
             returnEntity = result.recordsets[0][0];
         } catch (error) {
             console.log(error);
@@ -41,16 +41,17 @@ export class PizzaService {
                 .input('pLibre', pizza.libreGluten)
                 .input('pImporte', pizza.importe)
                 .input('pDesc', pizza.descripcion)
-                .query('INSERT INTO Pizza (nombre, ) VALUES (@pNom, @pLibre, @pImporte, @pDesc)');
-            returnEntity = result.recordsets[0][0];
+                .query('INSERT INTO pizza (nombre, libreGluten, importe, descripcion) VALUES (@pNom, @pLibre, @pImporte, @pDesc)');
+            returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
         }
         return returnEntity;
     }
 
-    static update = async (pizza) => {
+    static update = async (id, pizza) => {
         let returnEntity = null;
+        console.log(pizza);
         console.log('Estoy en: PizzaService.update(pizza)');
         try {
             let pool = await sql.connect(config);
@@ -68,14 +69,14 @@ export class PizzaService {
         return returnEntity;
     }
 
-    static deleteBy = async (id) => {
+    static deleteById = async (id) => {
         let rowsAffected = 0;
-        console.log('Estoy en: PizzasService.deleteBy(pizza)');
+        console.log('Estoy en: PizzasService.deleteBy(id)');
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('pId', sql.Int, id)
-                .query('DELETE FROM Pizzas WHERE id = @pId');
+                .query('DELETE FROM pizza WHERE id = @pId');
             rowsAffected = result.rowsAffected;
         } catch (error) {
             console.log(error)
