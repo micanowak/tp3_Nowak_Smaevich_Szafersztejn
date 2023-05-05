@@ -1,26 +1,27 @@
-import { application } from "express";
+import pkg from 'express';
+const { app } = pkg;
 import express from "express"
 import { PizzaService } from "./services/pizza-services.js";
 
-application.get('/pizza', async (req, res) => {
+app.get('/Pizza', async (req, res) => {
     const pizza = await PizzaService.getAll(req.params.id)
     res.status(200).send(pizza)
 })
 
-app.get('/pizza/:id', async (req, res) => {
-    const pizza = await PizzaService.getById(reg.params.id)
+app.get('/Pizza/:id', async (req, res) => {
+    const pizza = await PizzaService.getById(req.params.id)
     res.status(200).send(pizza)
 
 })
 
-app.get('/pizza', async (req, res) => {
+app.get('/Pizza', async (req, res) => {
     const pizza = await PizzaService.getALL()
     res.status(200).send(pizza)
 
 })
 
 app.use(express.json())
-app.post('/pizza', async (req, res) => {
+app.post('/Pizza', async (req, res) => {
     console.log("en post, req:", req)
     try {
         await PizzaService.insert(req.body)
